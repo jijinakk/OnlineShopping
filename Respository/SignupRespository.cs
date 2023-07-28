@@ -225,6 +225,35 @@ namespace OnlineShopping.Respository
 
             return result > 0;
         }
-       
+
+
+
+        public string GetCustomer(Signin signin)
+        {
+            Connection();
+            SqlCommand command = new SqlCommand("[dbo].[SP_CustomerUserType]", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@usertype", "customer"); // Assuming the parameter is "customer" for customers
+
+            connection.Open();
+            string result = Convert.ToString(command.ExecuteScalar());
+            connection.Close();
+
+            return result;
+        }
+        public string GetSeller(Signin signin)
+        {
+            Connection();
+            SqlCommand command = new SqlCommand("[dbo].[SP_SellerUserType]", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@usertype", "seller"); // Assuming the parameter is "seller" for sellers
+
+            connection.Open();
+            string result = Convert.ToString(command.ExecuteScalar());
+            connection.Close();
+
+            return result;
+        }
+
     }
 }

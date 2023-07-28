@@ -130,7 +130,6 @@ namespace OnlineShopping.Controllers
                 {
                     if (string.IsNullOrEmpty(sellersignup.usertype))
                     {
-                        sellersignup.usertype = "customer";
                         signupRepository.AddSellerDetails(sellersignup);
                         ViewBag.Message = "User Details Added Successfully";
                     }
@@ -159,12 +158,26 @@ namespace OnlineShopping.Controllers
                 {
                     SignupRespository signupRepository = new SignupRespository();
                     bool isValidUser = signupRepository.ValidateUser(signin.Username, signin.Password);
+                   string  getCustomer= signupRepository.GetCustomer(signin);
+                    string getSeller = signupRepository.GetSeller(signin);
+
 
                     if (isValidUser)
+
                     {
-                        // User is authenticated, you can add code to set authentication cookies or session variables
-                        ViewBag.Message = "Login successful";
-                        return RedirectToAction("GetDetails"); // Redirect to the home page after successful login
+                        if (getCustomer == "customer")
+                        {
+
+                            // User is authenticated, you can add code to set authentication cookies or session variables
+                            ViewBag.Message = "Login successful";
+                            return RedirectToAction("GetDetails"); // Redirect to the home page after successful login
+                        }
+                        else if(getSeller=="seller")
+                        {
+                            return RedirectToAction("AddDetail"); // Redirect to the home page after successful login
+
+                        }
+
                     }
                     else
                     {

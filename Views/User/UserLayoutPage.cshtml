@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserLayoutPage</title>
+    <link href="~/Content/CSS/userhomepage.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div>
+
+        <nav>
+
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Logout", "", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    <li>@Html.ActionLink("Home", "UserHomePage", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+       
+    <div class="sidenav">
+        <a href="#">Profile</a>
+
+        <a href="#">My orders</a>
+        <a href="#">Wishlist</a>
+        <a href="#">Payments</a>
+        <button class="dropdown-btn">
+            Dropdown
+            <i class="fa fa-caret-down"></i>
+        </button>
+    </div>
+</body>
+</html>
