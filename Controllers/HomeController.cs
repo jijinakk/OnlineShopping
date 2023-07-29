@@ -12,11 +12,54 @@ namespace OnlineShopping.Controllers
 {
     public class HomeController : Controller
     {
+
+        public ActionResult UserHomePage()
+        {
+            return View();
+        }
+
+        // GET: User/Details/5
+        public ActionResult MainHomePageLayout()
+        {
+            return View();
+        }
+        public ActionResult Aboutus()
+        {
+            return View();
+        }
+        public ActionResult Contactus()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Contactus(Contactus contactus)
+        {
+            SignupRespository signupRepository = new SignupRespository();
+
+            if (ModelState.IsValid)
+            {
+
+
+                if (signupRepository.Contactus(contactus))
+                {
+
+                    ViewBag.Message = "User Details Added Successfully";
+
+                }
+
+            }
+            return View();
+
+        }
+
+
         public ActionResult Layout()
         {
             return View();
         }
-        public ActionResult GetDetails()
+            // GET: User/Details/5
+
+            public ActionResult GetDetails()
         {
             SignupRespository signupRepository = new SignupRespository();
             ModelState.Clear();
@@ -56,7 +99,7 @@ namespace OnlineShopping.Controllers
             }
 
 
-            return RedirectToAction("GetDetails");
+            return RedirectToAction("Signin");
 
         }
 
@@ -144,53 +187,11 @@ namespace OnlineShopping.Controllers
         }
         // GET: Login
 
-        public ActionResult Signin()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Signin(Signin signin)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    SignupRespository signupRepository = new SignupRespository();
-                    bool isValidUser = signupRepository.ValidateUser(signin.Username, signin.Password);
-                   string  getCustomer= signupRepository.GetCustomer(signin);
-                    string getSeller = signupRepository.GetSeller(signin);
-
-
-                    if (isValidUser)
-
-                    {
-                        if (getCustomer == "customer")
-                        {
-
-                            // User is authenticated, you can add code to set authentication cookies or session variables
-                            ViewBag.Message = "Login successful";
-                            return RedirectToAction("GetDetails"); // Redirect to the home page after successful login
-                        }
-                        else if(getSeller=="seller")
-                        {
-                            return RedirectToAction("AddDetail"); // Redirect to the home page after successful login
-
-                        }
-
-                    }
-                    else
-                    {
-                        ViewBag.Message = "Invalid username or password";
-                    }
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
 
     }
-}
+
+        
+ }
+
+

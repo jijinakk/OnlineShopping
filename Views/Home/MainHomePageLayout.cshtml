@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+      <title>MainHomePage</title>
+      <link href="~/Content/CSS/mainhomepage.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div>
+
+        <nav>
+
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Contactus", "Contactus", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Signin", "Signin", "Signin", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("About us", "Aboutus", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Signup", "AddDetail", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container body-content">
+       @RenderBody() <hr />
+        <div>
+            <footer class="footer">
+                <p>&copy; Online shopping platform</p>
+            </footer>
+        </div>
+    </div>
+    
+</body>
+</html>

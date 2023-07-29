@@ -7,6 +7,8 @@ using System.Web;
 using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
+using OnlineShopping.Models;
+using System.Web.Mvc;
 
 namespace OnlineShopping.Respository
 {
@@ -27,30 +29,23 @@ namespace OnlineShopping.Respository
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        private string HashPassword(string password)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
-            }
-        }
+       
 
 
-        public bool ValidateUser(string username, string password)
+        public string GetUserRole(string username, string password)
         {
             Connection();
-            SqlCommand command = new SqlCommand("SPS_ValidateUser", connection);
+            SqlCommand command = new SqlCommand("SP_GetValidatedUser", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@username", username);
-            string hashedPassword = HashPassword(password);
-            command.Parameters.AddWithValue("@password", hashedPassword);
+            //   string hashedPassword = HashPassword(password);
+            command.Parameters.AddWithValue("@password", password);
 
             connection.Open();
-            int result = Convert.ToInt32(command.ExecuteScalar());
+            var role = command.ExecuteScalar() as string;
             connection.Close();
 
-            return result > 0;
+            return role;
         }
     }
 }

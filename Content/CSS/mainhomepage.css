@@ -1,13 +1,13 @@
-﻿ 
-
-        
-
+﻿body {
+    font-family: Arial;
+    color: black;
+}
 ul {
     list-style-type: none;
     margin-top: -10px;
     padding: 0;
     overflow: hidden;
-    background-color:lightsteelblue;
+    background-color: lightsteelblue;
 }
 
 li {
@@ -24,57 +24,27 @@ li {
 
         li a:hover {
             background-color: #111;
-        
-            
-       }
+        }
 
 body {
     font-family: "Lato", sans-serif;
 }
-
-/* Fixed sidenav, full height */
-.sidenav {
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: lightsteelblue;
-    overflow-x: hidden;
-    padding-top: 20px;
+p {
+    font-family: "Lato", sans-serif;
 }
+/* Fixed sidenav, full height */
 
-    /* Style the sidenav links and the dropdown button */
-    .sidenav a, .dropdown-btn {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 20px;
-        color: #818181;
-        display: block;
-        border: none;
-        background: none;
-        width: 100%;
-        text-align: left;
-        cursor: pointer;
-        outline: none;
-    }
-
-        /* On mouse-over */
-        .sidenav a:hover, .dropdown-btn:hover {
-            color: #f1f1f1;
-        }
 
 /* Main content */
 .main {
     margin-left: 200px; /* Same as the width of the sidenav */
     font-size: 20px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
+    padding: 0px 5px;
 }
 
 /* Add an active class to the active dropdown button */
 .active {
-    background-color:green;
+    background-color: green;
     color: white;
 }
 
@@ -101,11 +71,37 @@ body {
             font-size: 18px;
         }
 }
+
 .footer {
     position: fixed;
     left: 0;
-    bottom:100%;
+    bottom:0;
     width: 100%;
     color: blue;
     text-align: right;
+}
+
+.split {
+    margin-top: 250px;
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 200px;
+}
+.left {
+    left: 0;
+}
+
+.right {
+    right: 0;
+    background-color:aliceblue;
+}
+.centered {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

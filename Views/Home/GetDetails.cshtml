@@ -53,12 +53,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.username)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.confirmPassword)
-            </th>
+            
             <th></th>
         </tr>
     
@@ -100,12 +95,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.username)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.confirmPassword)
-            </td>
+            
             <td>
                 @Html.ActionLink("Edit", "EditDetails", new { id=item.id }, new { @class = "btn btn-primary" }) |
                 @Html.ActionLink("Delete", "DeleteDetails", new { id=item.id }, new { @class = "btn btn-danger" })

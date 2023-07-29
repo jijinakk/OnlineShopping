@@ -9,7 +9,7 @@ namespace OnlineShopping.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index()
+        public ActionResult UserHomePage()
         {
             return View();
         }

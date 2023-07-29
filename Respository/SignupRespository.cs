@@ -28,19 +28,11 @@ namespace OnlineShopping.Respository
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        private string HashPassword(string password)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
-            }
-        }
+       
 
-
-
-
-
+        ///<summary>
+        ///signup form
+        ///</summary>
 
         public bool AddDetails(Signup signup)
         {
@@ -59,8 +51,7 @@ namespace OnlineShopping.Respository
             command.Parameters.AddWithValue("@pincode", signup.pincode);
             command.Parameters.AddWithValue("@country", signup.country);
             command.Parameters.AddWithValue("@username", signup.username);
-            string hashedPassword = HashPassword(signup.password);
-            command.Parameters.AddWithValue("@password", hashedPassword);
+            command.Parameters.AddWithValue("@password", signup.password);
             connection.Open();
             int i = command.ExecuteNonQuery();
             connection.Close();
@@ -74,6 +65,11 @@ namespace OnlineShopping.Respository
             }
 
         }
+
+
+        ///<summary>
+        ///get the sign in details of customer
+        ///</summary>
         public List<Signup> GetDetails()
         {
             Connection();
@@ -116,6 +112,8 @@ namespace OnlineShopping.Respository
         /// </summary>
         /// <param name="signup"></param>
         /// <returns></returns>
+        /// 
+
         public bool Edit(Signup signup)
         {
             Connection();
@@ -135,7 +133,6 @@ namespace OnlineShopping.Respository
             command.Parameters.AddWithValue("@pincode", signup.pincode);
             command.Parameters.AddWithValue("@country", signup.country);
             command.Parameters.AddWithValue("@username", signup.username);
-            string hashedPassword = HashPassword(signup.password);
 
             command.Parameters.AddWithValue("@password", signup.password);
 
@@ -193,8 +190,7 @@ namespace OnlineShopping.Respository
             command.Parameters.AddWithValue("@state", sellersignup.state);
             command.Parameters.AddWithValue("@country", sellersignup.country);
             command.Parameters.AddWithValue("@username", sellersignup.username);
-            string hashedPassword = HashPassword(sellersignup.password);
-            command.Parameters.AddWithValue("@password", hashedPassword);
+            command.Parameters.AddWithValue("@password", sellersignup.password);
 
             command.Parameters.AddWithValue("@usertype", sellersignup.usertype);
 
@@ -210,49 +206,29 @@ namespace OnlineShopping.Respository
                 return false;
             }
         }
-        public bool ValidateUser(string username, string password)
+
+        public bool Contactus(Contactus contactus)
         {
             Connection();
-            SqlCommand command = new SqlCommand("SPS_ValidateUser", connection);
+            SqlCommand command = new SqlCommand("SP_Contactus", connection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@username", username);
-            string hashedPassword = HashPassword(password);
-            command.Parameters.AddWithValue("@password", hashedPassword);
-
+            command.Parameters.AddWithValue("@name", contactus.name);
+            command.Parameters.AddWithValue("@email", contactus.email);
+            command.Parameters.AddWithValue("@subject", contactus.subject);
+            command.Parameters.AddWithValue("@message", contactus.message);
+           
             connection.Open();
-            int result = Convert.ToInt32(command.ExecuteScalar());
+            int i = command.ExecuteNonQuery();
             connection.Close();
+            if (i > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
-            return result > 0;
-        }
-
-
-
-        public string GetCustomer(Signin signin)
-        {
-            Connection();
-            SqlCommand command = new SqlCommand("[dbo].[SP_CustomerUserType]", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@usertype", "customer"); // Assuming the parameter is "customer" for customers
-
-            connection.Open();
-            string result = Convert.ToString(command.ExecuteScalar());
-            connection.Close();
-
-            return result;
-        }
-        public string GetSeller(Signin signin)
-        {
-            Connection();
-            SqlCommand command = new SqlCommand("[dbo].[SP_SellerUserType]", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@usertype", "seller"); // Assuming the parameter is "seller" for sellers
-
-            connection.Open();
-            string result = Convert.ToString(command.ExecuteScalar());
-            connection.Close();
-
-            return result;
         }
 
     }

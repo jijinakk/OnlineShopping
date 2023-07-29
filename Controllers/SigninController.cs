@@ -25,6 +25,39 @@ namespace OnlineShopping.Controllers
         {
             return View();
         }
+        [HttpPost]
+
+        public ActionResult Signin(Signin signin)
+        {
+
+            if (ModelState.IsValid)
+            {
+                SigninRespository signinRepository = new SigninRespository();
+                string role = signinRepository.GetUserRole(signin.username, signin.password);
+
+                if (role == "customer")
+                {
+                    return RedirectToAction("UserHomePage", "User");
+
+                }
+                else if (role == "seller")
+                {
+                    return RedirectToAction("");
+                }
+                else if (role == "Admin")
+                {
+                    return RedirectToAction("AdminHomePage", "Admin");
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid username or password";
+                }
+            }
+
+            return RedirectToAction("EditDetails");
+
+
+        }
 
     }
 }
