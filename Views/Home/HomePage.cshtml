@@ -3,6 +3,86 @@
     ViewBag.Title = "HomePage";
     Layout = "~/Views/Home/MainHomePageLayout.cshtml";
 }
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Homepage</title>
 
-<h2>HomePage</h2>
+</head>
+<body>
+
+    <div class="slideshow-container">
+        <!-- Full-width images with number and caption text -->
+        <div class="mySlides fade">
+            <img src="~/Content/Images/pexels-andrea-piacquadio-1050244.jpg" />
+
+        </div>
+        <div class="mySlides fade">
+            <img src="~/Content/Images/pexels-antoni-shkraba-6207736.jpg" />
+        </div>
+        <div class="mySlides fade">
+            <img src="~/Content/Images/pexels-karolina-grabowska-5632381.jpg" />
+        </div>
+
+            <div class="mySlides fade">
+                <img src="~/Content/Images/pexels-karolina-grabowska-5632388.jpg" />
+            </div>
+            <div class="mySlides fade">
+                <img src="~/Content/Images/pexels-kindel-media-6868621.jpg" />
+            </div>
+            
+        </div>
+
+
+        
+
+    <!-- The dots/circles -->
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+
+    </div>
+    <script>
+        let slideIndex = 1;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+
+            slideIndex++; // Move the increment here
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlides();
+        }
+
+    </script>
+    
+</body >
+</html >
 

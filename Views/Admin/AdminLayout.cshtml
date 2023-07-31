@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AdminLayout</title>
+    <link href="~/Content/CSS/adminhomepage.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div>
+
+        <nav>
+
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Logout", "", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container body-content">
+        <hr />
+        <div>
+            <footer class="footer">
+                <p>&copy; Online shopping platform</p>
+            </footer>
+        </div>
+    </div>
+    <div class="sidenav">
+        <a href="#">Profile</a>
+        <a href="#">Add Product</a>
+        @Html.ActionLink("User Details", "GetDetails", "Home", new { area = "" }, new { @class = "nav-link" })
+        @Html.ActionLink("Seller Details", "GetSellerDetails", "Home", new { area = "" }, new { @class = "nav-link" })
+
+        <a href="#">Orders</a>
+        <a href="#">Payments</a>
+        <a href="#">Feedback</a>
+
+        
+    </div>
+</body>
+</html>

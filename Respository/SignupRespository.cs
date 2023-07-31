@@ -23,12 +23,7 @@ namespace OnlineShopping.Respository
             string conString = ConfigurationManager.ConnectionStrings["GetConnection"].ToString();
             connection = new SqlConnection(conString);
         }
-        /// <summary>
-        /// Password enctrypting for database
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
-       
+        
 
         ///<summary>
         ///signup form
@@ -153,28 +148,12 @@ namespace OnlineShopping.Respository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool DeleteDetails(int id)
-        {
-            Connection();
-            SqlCommand command = new SqlCommand("[dbo].[SPD_Signup]", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@id", id);
-            connection.Open();
-            int i = command.ExecuteNonQuery();
-            connection.Close();
-            if (i > 0)
-            {
-                return true;
-            }
-            else
-            {
-
-
-
-                return false;
-            }
-        }
-
+        
+        /// <summary>
+        /// Add seller
+        /// </summary>
+        /// <param name="sellersignup"></param>
+        /// <returns></returns>
 
         public bool AddSellerDetails(SellerSignup sellersignup)
         {
@@ -206,7 +185,46 @@ namespace OnlineShopping.Respository
                 return false;
             }
         }
+        /// <summary>
+        /// Get the detyails of the seller
+        /// </summary>
+        /// <returns></returns>
+        public List<SellerSignup> GetSellerDetails()
+        {
+            Connection();
+            List<SellerSignup> SellerSignupList = new List<SellerSignup>();
+            SqlCommand command = new SqlCommand("SPS_SellerSignup", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter data = new SqlDataAdapter(command);
+            DataTable dataTable = new DataTable();
+            connection.Open();
+            data.Fill(dataTable);
+            connection.Close();
+            foreach (DataRow datarow in dataTable.Rows)
+            {
 
+                SellerSignupList.Add(
+                    new SellerSignup
+                    {
+                        id = Convert.ToInt32(datarow["SellerId"]),
+                        name = Convert.ToString(datarow["name"]),
+                        gender = Convert.ToString(datarow["gender"])[0], // Take the first character
+                        email = Convert.ToString(datarow["email"]),
+                        phoneNumber = Convert.ToString(datarow["phoneNumber"]),
+                        idNumber = Convert.ToString(datarow["idNumber"]),
+                        city = Convert.ToString(datarow["city"]),
+                        state = Convert.ToString(datarow["state"]),
+                        country = Convert.ToString(datarow["country"]),
+                        username = Convert.ToString(datarow["username"]),
+                        password = Convert.ToString(datarow["password"])
+
+
+                    });
+            }
+            return SellerSignupList;
+        }
+
+        
         public bool Contactus(Contactus contactus)
         {
             Connection();
@@ -230,6 +248,6 @@ namespace OnlineShopping.Respository
             }
 
         }
-
+       
     }
 }

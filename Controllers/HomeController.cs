@@ -17,6 +17,10 @@ namespace OnlineShopping.Controllers
         {
             return View();
         }
+        public ActionResult HomePage()
+        {
+            return View();
+        }
 
         // GET: User/Details/5
         public ActionResult MainHomePageLayout()
@@ -59,7 +63,7 @@ namespace OnlineShopping.Controllers
         }
             // GET: User/Details/5
 
-            public ActionResult GetDetails()
+        public ActionResult GetDetails()
         {
             SignupRespository signupRepository = new SignupRespository();
             ModelState.Clear();
@@ -99,7 +103,7 @@ namespace OnlineShopping.Controllers
             }
 
 
-            return RedirectToAction("Signin");
+            return RedirectToAction("Signin","Signin");
 
         }
 
@@ -135,22 +139,7 @@ namespace OnlineShopping.Controllers
             }
 
         }
-        public ActionResult DeleteDetails(int id, Signup signup)
-        {
-            try
-            {
-                SignupRespository signupRepository = new SignupRespository();
-                if (signupRepository.DeleteDetails(id))
-                {
-                    ViewBag.AlertMessage("User details deleted successfully");
-                }
-                return RedirectToAction("GetDetails");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
 
         public ActionResult AddSellerDetails()
         {
@@ -185,10 +174,16 @@ namespace OnlineShopping.Controllers
                 return View();
             }
         }
+
+        public ActionResult GetSellerDetails()
+        {
+            SignupRespository signupRepository = new SignupRespository();
+            ModelState.Clear();
+            return View(signupRepository.GetSellerDetails());
+        }
         // GET: Login
 
        
-
     }
 
         

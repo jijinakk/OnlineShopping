@@ -21,7 +21,7 @@
                 <ul>
                     <li>@Html.ActionLink("Logout", "", "Home", new { area = "" }, new { @class = "nav-link" })</li>
 
-                    <li>@Html.ActionLink("Home", "UserHomePage", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Home", "HomePage", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </nav>
@@ -34,13 +34,13 @@
         </footer>
             </div>
     </div>
-    <div class="sidenav">
-        <a href="#">Profile</a>
+    @RenderBody()
+<div class="sidenav">
+    <a href="#">Profile</a>
+    <a href="#">My orders</a>
+    <a href="#">Wishlist</a>
+    <a href="#">Payments</a>
 
-        <a href="#">My orders</a>
-        <a href="#">Wishlist</a>
-        <a href="#">Payments</a>
-        
-    </div>
+</div>
 </body>
 </html>

@@ -46,7 +46,7 @@ namespace OnlineShopping.Controllers
                 }
                 else if (role == "Admin")
                 {
-                    return RedirectToAction("AdminHomePage", "Admin");
+                    return RedirectToAction("AdminLayout", "Admin");
                 }
                 else
                 {
