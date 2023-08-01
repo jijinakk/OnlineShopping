@@ -91,34 +91,6 @@ namespace OnlineShopping.Respository
 
 
         }
-        public bool AddProduct(Product product)
-        {
-            Connection();
-            SqlCommand command = new SqlCommand("sp_InsertProduct", connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@productName", product.productName);
-            command.Parameters.AddWithValue("@productSize", product.productSize);
-
-            command.Parameters.AddWithValue("@description", product.description);
-            command.Parameters.AddWithValue("@price", product.price);
-            command.Parameters.AddWithValue("@categoryID", product.categoryID);
-            command.Parameters.AddWithValue("@brand", product.brand);
-            command.Parameters.AddWithValue("@stockQuantity", product.stockQuantity);
-            command.Parameters.AddWithValue("@imageURL", product.imageURL);
-            command.Parameters.AddWithValue("@productSource", product.productSource);
-
-            connection.Open();
-            int i = command.ExecuteNonQuery();
-            connection.Close();
-            if (i > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+       
     }
 }

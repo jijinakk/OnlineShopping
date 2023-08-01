@@ -78,37 +78,8 @@ namespace OnlineShopping.Controllers
             return View(adminRespository.FeedbackDetails());
         }
 
-        public ActionResult AddProduct()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// Post method to assign created value to database
-        /// </summary>
-        /// <param name="add"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult AddProduct(Product product)
-        {
-
-
-            AdminRespository adminRespository = new AdminRespository();
-            adminRespository.AddProduct(product);
-            string fileName = Path.GetFileNameWithoutExtension(product.Image.FileName);
-            string extention = Path.GetExtension(product.Image.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssff") + extention;
-            product.imageURL = "~/Image/" + fileName;
-            fileName = Path.Combine(Server.MapPath("~/Image/"));
-            product.Image.SaveAs(fileName);
-            return View();
-
-
-
-
-        }
-
-
+       
     }
+        
 
 }
