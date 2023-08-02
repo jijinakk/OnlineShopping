@@ -1,0 +1,106 @@
+﻿@model OnlineShopping.Models.Product
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetProductDetails</title>
+</head>
+<body>
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.productName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.productName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.productSize)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.productSize)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.categoryID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.categoryID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.brand)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.brand)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.stockQuantity)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.stockQuantity)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.image)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.productSource)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.productSource)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.sellerID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.sellerID)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

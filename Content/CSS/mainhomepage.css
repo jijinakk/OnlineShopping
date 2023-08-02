@@ -1,35 +1,40 @@
 ﻿body {
     font-family: Arial;
     color: black;
+    margin:0;
 }
+
 ul {
     list-style-type: none;
     margin-top: -10px;
     padding: 0;
     overflow: hidden;
-    background-color: lightsteelblue;
+    background-color: red;
 }
 
 li {
     float: right;
 }
 
+div {
+}
 
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 16px;
+    text-decoration: none;
+}
+
+    li a:hover {
+        background-color:red;
     }
-
-        li a:hover {
-            background-color: #111;
-        }
 
 body {
     font-family: "Lato", sans-serif;
 }
+
 p {
     font-family: "Lato", sans-serif;
 }
@@ -76,7 +81,7 @@ p {
 .footer {
     position: fixed;
     left: 0;
-    bottom:0;
+    bottom: 0;
     width: 100%;
     color: blue;
     text-align: right;
@@ -92,20 +97,23 @@ p {
     overflow-x: hidden;
     padding-top: 200px;
 }
+
 .left {
     left: 0;
 }
 
 .right {
     right: 0;
-    background-color:aliceblue;
+    background-color: aliceblue;
 }
+
 .centered {
     position: absolute;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 * {
     box-sizing: border-box
 }
@@ -125,16 +133,15 @@ body {
 
 img {
     vertical-align: left;
-    width:135%;
-    height:520px;
-    padding:5px;
+    width: 135%;
+    height: 520px;
+    padding: 5px;
 }
 
 /* Slideshow container */
 .slideshow-container {
     max-width: 1000px;
     position: relative;
-   
 }
 
 /* Caption text */

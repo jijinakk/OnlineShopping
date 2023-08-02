@@ -20,11 +20,11 @@ namespace OnlineShopping.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddProduct(Product product,HttpPostedFileBase file)
+        public ActionResult AddProduct(Product product, HttpPostedFileBase file)
 
         {
             string conString = ConfigurationManager.ConnectionStrings["GetConnection"].ToString();
-             SqlConnection connection = new SqlConnection(conString);
+            SqlConnection connection = new SqlConnection(conString);
             SqlCommand command = new SqlCommand("[dbo].[sp_InsertProduct]", connection);
             command.CommandType = CommandType.StoredProcedure;
             connection.Open();
@@ -35,14 +35,14 @@ namespace OnlineShopping.Controllers
             command.Parameters.AddWithValue("@categoryID", product.categoryID);
             command.Parameters.AddWithValue("@brand", product.brand);
             command.Parameters.AddWithValue("@stockQuantity", product.stockQuantity);
-            if(file!=null)
+            if (file != null)
             {
                 string filename = Path.GetFileName(file.FileName);
                 string imgPath = Path.Combine(Server.MapPath("~/ProductImages/"), filename);
                 file.SaveAs(imgPath);
 
             }
-            command.Parameters.AddWithValue("@image", "~/ProductImages/"+file.FileName);
+            command.Parameters.AddWithValue("@image", "~/ProductImages/" + file.FileName);
 
             command.Parameters.AddWithValue("@productSource", product.productSource);
             command.Parameters.AddWithValue("@sellerID", product.sellerID);
@@ -53,39 +53,43 @@ namespace OnlineShopping.Controllers
             return View();
         }
 
-        
-            public ActionResult GetDetails()
-            {
+
+        public ActionResult GetProductDetails()
+        {
             string conString = ConfigurationManager.ConnectionStrings["GetConnection"].ToString();
             SqlConnection connection = new SqlConnection(conString);
-            List<Signup> SignupList = new List<Signup>();
-                SqlCommand command = new SqlCommand("[dbo].[SPS_Signup]", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter data = new SqlDataAdapter(command);
-                DataTable dataTable = new DataTable();
-                connection.Open();
-                data.Fill(dataTable);
-                connection.Close();
-                foreach (DataRow datarow in dataTable.Rows)
-                {
+            List<Product> SignupList = new List<Product>();
+            SqlCommand command = new SqlCommand("sp_GetProduct", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter data = new SqlDataAdapter(command);
+            DataTable dataTable = new DataTable();
+            connection.Open();
+            data.Fill(dataTable);
+            connection.Close();
+            foreach (DataRow datarow in dataTable.Rows)
+            {
 
-                    SignupList.Add(
-                        new Product
-                        {
-                            productName = Convert.ToString(datarow["productName"]),
-                            productSize = Convert.ToString(datarow["productSize"]),
-                            description = Convert.ToString(datarow["description"]),
-                            Price = Convert.ToString(datarow["Price"]),
-                            categoryID = Convert.ToInt32(datarow["categoryID"]),
-                            brand = Convert.ToString(datarow["brand"]),
-                            stockQuantity = Convert.ToString(datarow["stockQuantity"]),
-                            sellerID = Convert.ToInt32(datarow["sellerID"])
+                SignupList.Add(
+                    new Product
+                    {
+                        productID = Convert.ToInt32(datarow["productID"]),
+
+                        productName = Convert.ToString(datarow["productName"]),
+                        productSize = Convert.ToString(datarow["productSize"]),
+                        description = Convert.ToString(datarow["description"]),
+                        Price = Convert.ToString(datarow["Price"]),
+                        categoryID = Convert.ToInt32(datarow["categoryID"]),
+                        brand = Convert.ToString(datarow["brand"]),
+                        stockQuantity = Convert.ToString(datarow["stockQuantity"]),
+
+                        image = Convert.ToString(datarow["imagePath"]), // Populate the image path property
+
+                        sellerID = Convert.ToInt32(datarow["sellerID"])
 
 
-                        });
-                }
-                return  View();
+                    });
             }
+            return View();
         }
     }
 }

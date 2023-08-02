@@ -40,11 +40,11 @@
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="#">Profile</a>
-        <a href="#">Add Product</a>
+        @Html.ActionLink("Add Product", "AddProduct", "Product", new { area = "" }, new { @class = "nav-link" })
         @Html.ActionLink("User Details", "GetDetails", "Home", new { area = "" }, new { @class = "nav-link" })
         @Html.ActionLink("Seller Details", "GetSellerDetails", "Home", new { area = "" }, new { @class = "nav-link" })
 
-        <a href="#">Orders</a>
+        <a href="#">Orders</a>AddProduct
         <a href="#">Payments</a>
         <a href="#">Feedback</a>
     </div>

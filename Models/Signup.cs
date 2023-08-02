@@ -14,8 +14,10 @@ namespace OnlineShopping.Models
         public string firstName { get; set; }
         [DisplayName("Last name")]
         public string lastName { get; set; }
-        [DisplayName("Date of birth")]
+        [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Range(typeof(DateTime), "1/1/1900", "12/31/9999", ErrorMessage = "Future dates are not allowed.")]
         public DateTime dateOfBirth { get; set; }
         [DisplayName("Gender")]
         [Required(ErrorMessage = "Gender is required")]
