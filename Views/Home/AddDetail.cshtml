@@ -4,17 +4,20 @@
     ViewBag.Title = "AddDetail";
     Layout = "~/Views/Home/MainHomePageLayout.cshtml";
 }
-@{
-    string emailPattern = @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$";
-}
+<link href="~/Content/CSS/createForm.css" rel="stylesheet" />
+
+<script src="~/Scripts/Javascript/FormValidation.js"></script>
 
 
+<div class="secondnav">
+    @Html.ActionLink("sell on snapdeal", "AddSellerDetails")
+</div>
 @using (Html.BeginForm())
 {
-
     @Html.AntiForgeryToken()
+
     <div class="container">
-        <link href="~/Content/CSS/createForm.css" rel="stylesheet" />
+        
         <div style="font-size:25px ;">
             <h3>Sign up</h3>
         </div>
@@ -22,6 +25,7 @@
         <div class="form">
 
             <hr />
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="input-box">
 
@@ -43,7 +47,7 @@
             <div class="input-box">
 
                 @Html.LabelFor(model => model.dateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.dateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "dateOfBirth", onfocusout = "validateDateOfBirth" } })
+                @Html.EditorFor(model => model.dateOfBirth, new { htmlAttributes = new { @class = "form-control", id = "dateOfBirth", onfocusout = "validateDateOfBirth()" } })
                 @Html.ValidationMessageFor(model => model.dateOfBirth, "", new { @class = "text-danger" })
                 <span id="dateOfBirthError" class="text-danger"></span>
 
@@ -64,7 +68,7 @@
 
             <div class="input-box">
                 @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", id = "email" ,onfocusout= "validateEmail()" } })
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", id = "email", onfocusout = "validateEmail()" } })
                 @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
                 <span id="emailError" class="text-danger"></span>
 
@@ -73,8 +77,9 @@
             <div class="input-box">
 
                 @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control",id= "phoneNumber", onfocusout="validatePhoneNumber()" } })
+                @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control", id = "phoneNumber", onfocusout = "validatePhoneNumber()" } })
                 @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
+                <span id="phoneNumberError" class="text-danger"></span>
             </div>
 
             <div class="input-box">
@@ -82,18 +87,31 @@
                 @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
             </div>
+            <div class="input-box">
+                @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
+                <select id="countryDropdown" class="select" style="height: 50px; width: 100%;">
+                    <option value="">Select a country</option>
+                    <!-- Add country options here -->
+                </select>
+                @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
+            </div>
 
+            <div class="inpt-box">
+                @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
+                <select id="stateDropdown" class="select" style="height: 50px; width: 100%;">
+                    <option value="">Select a state</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+            </div>
             <div class="input-box">
                 @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
+                <select id="cityDropdown" class="select" style="height: 50px; width: 100%;">
+                    <option value="">Select a city</option>
+                </select>
                 @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
             </div>
 
-            <div class="input-box">
-                @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
-            </div>
+
 
             <div class="input-box">
                 @Html.LabelFor(model => model.pincode, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -101,11 +119,7 @@
                 @Html.ValidationMessageFor(model => model.pincode, "", new { @class = "text-danger" })
             </div>
 
-            <div class="input-box">
-                @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.country, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
-            </div>
+
 
             <div class="input-box">
                 @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -115,19 +129,21 @@
 
             <div class="input-box">
                 @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", id = "password", onkeyup = "validatePassword()" } })
                 @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                <span id="passwordError" class="text-danger"></span>
             </div>
 
             <div class="input-box">
                 @Html.LabelFor(model => model.confirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EditorFor(model => model.confirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.confirmPassword, new { htmlAttributes = new { @class = "form-control", id = "confirmPassword", onkeyup = "validatePassword()" } })
                 @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
+                <span id="confirmPasswordError" class="text-danger"></span>
             </div>
 
             <div>
                 <div>
-                    <input type="submit" value="Signup" class="button" onclick="validateFirstName()" />
+                    <input type="submit" value="Signup" class="button" />
                 </div>
             </div>
         </div>
@@ -135,120 +151,5 @@
 }
 
 @Html.ActionLink("Back to List", "Index")
-</>
-<script>
 
 
-
-        function validateFirstName() {
-                var firstNameInput = document.getElementById("firstName");
-                var firstNameValue = firstNameInput.value.trim();
-                var firstNameError = document.getElementById("firstNameError");
-
-                // Clear previous error message
-                firstNameError.textContent = "";
-
-                // Check if the field is empty
-                if (firstNameValue === "") {
-                    firstNameError.textContent = "First name cannot be empty.";
-                    return;
-                }
-
-                // Check if the input contains only alphabetic characters
-                if (!/^[A-Za-z]+$/.test(firstNameValue)) {
-                    firstNameError.textContent = "First name should contain alphabetic characters only.";
-                    return;
-                }
-
-
-                // Attach validateFirstName to the onfocusout event
-                var firstNameInput = document.getElementById("firstName");
-                firstNameInput.addEventListener("focusout", validateFirstName);
-            }
-
-
-    function validateLastName() {
-        var lastNameInput = document.getElementById("lastName");
-        var lastNameValue = lastNameInput.value.trim();
-        var lastNameError = document.getElementById("lastNameError");
-
-        // Clear previous error message
-        lastNameError.textContent = "";
-
-        // Check if the field is empty
-        if (lastNameValue === "") {
-            lastNameError.textContent = "Last name cannot be empty.";
-            return;
-        }
-
-        // Check if the input contains only alphabetic characters
-        if (!/^[A-Za-z]+$/.test(lastNameValue)) {
-            lastNameError.textContent = "Last name should contain alphabetic characters only.";
-            return;
-        }
-
-
-        // Attach validateFirstName to the onfocusout event
-        var lastNameInput = document.getElementById("lastName");
-        lastNameInput.addEventListener("focusout", validateLastName);
-    }
-
-
-    function validateDateOfBirth() {
-        var dateOfBirthInput = document.getElementById("dateOfBirth");
-        var dateOfBirthValue = new Date(dateOfBirthInput.value);
-        var currentDate = new Date();
-
-        var dateOfBirthError = document.getElementById("dateOfBirthError");
-
-        // Clear previous error message
-        dateOfBirthError.textContent = "";
-
-        // Check if the entered date is in the future
-        if (dateOfBirthValue > currentDate) {
-            dateOfBirthError.textContent = "Date of birth cannot be a future date.";
-            return;
-        }
-
-
-        // Attach validateDateOfBirth to the onblur event
-        var dateOfBirthInput = document.getElementById("dateOfBirth");
-        dateOfBirthInput.addEventListener("blur", validateDateOfBirth);
-    }
-    function validateEmail() {
-        var emailInput = document.getElementById("email");
-        var emailValue = emailInput.value.trim();
-        var emailError = document.getElementById("emailError");
-
-        // Clear previous error message
-        emailError.textContent = "";
-
-        // Email validation regular expression
-        var emailPattern = @Html.Raw(Json.Encode(emailPattern)); // Use Html.Raw to output the raw regular expression
-
-        // Check if the input matches the email pattern
-        if (!emailPattern.test(emailValue)) {
-            emailError.textContent = "Please enter a valid email address.";
-            return;
-        } var emailInput = document.getElementById("email");
-        emailInput.addEventListener("blur", validateEmail);
-    }
-    function validatePhoneNumber() {
-        var phoneNumberInput = document.getElementById("phoneNumber");
-        var phoneNumberValue = phoneNumberInput.value.trim();
-        var phoneNumberError = document.getElementById("phoneNumberError");
-
-        // Clear previous error message
-        phoneNumberError.textContent = "";
-
-        // Check if the phone number contains exactly 10 digits
-        if (phoneNumberValue.length !== 10 || !(/^\d+$/.test(phoneNumberValue))) {
-            phoneNumberError.textContent = "Phone number must contain exactly 10 digits.";
-            return;
-        }
-    }
-
-    // Attach validatePhoneNumber to the onblur event
-    var phoneNumberInput = document.getElementById("phoneNumber");
-    phoneNumberInput.addEventListener("blur", validatePhoneNumber);
-</script>

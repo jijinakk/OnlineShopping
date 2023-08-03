@@ -85,9 +85,7 @@ namespace OnlineShopping.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult AddDetail(Signup signup)
-        {
-
-
+        { 
             SignupRespository signupRepository = new SignupRespository();
 
             if (ModelState.IsValid)

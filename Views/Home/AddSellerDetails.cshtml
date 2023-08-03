@@ -1,127 +1,216 @@
 ﻿@model OnlineShopping.Models.SellerSignup
 
 @{
-    Layout = null;
+    ViewBag.Title = "AddSellerDetails";
+    Layout = "~/Views/Home/MainHomePageLayout.cshtml";
 }
 
-<!DOCTYPE html>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <link href="~/Content/CSS/createForm.css" rel="stylesheet" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AddSellerDetails</title>
-</head>
-<body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    
-    
-    @using (Html.BeginForm()) 
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>SellerSignup</h4>
-            <hr />
+    <div class="container">
+
+        <div style="font-size:25px; color:black;">
+            <h3>Sign up</h3>
+        </div>
+
+        <div class="form">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
+            <div class="input-box">
+
                 @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", id = "name", onfocusout = "validateName()" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                <span id="nameError" class="text-danger"></span>
+
             </div>
-    
-            <div class="form-group">
+
+            <div class="">
+
                 @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                <div class="form-gender">
+
+                    @Html.Label("Male")
+
+                    @Html.RadioButtonFor(model => model.gender, "M", new { @class = "form-check-input" })
+                    @Html.Label("Female")
+
+                    @Html.RadioButtonFor(model => model.gender, "F", new { @class = "form-check-input" })
                 </div>
             </div>
-    
-            <div class="form-group">
+
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", id = "email", onfocusout = "validateEmail()" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.idNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.idNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.idNumber, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.idNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.idNumber, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.country, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
-                </div>
+                <select id="countryDropdown" class="select" style="height: 50px; width: 100%;">
+                    <option value="">Select a country</option>
+                    <!-- Add country options here -->
+                </select>
+                @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
+
+            <div class="inpt-box">
+                @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
+                <select id="stateDropdown" class="select" style="height: 50px; width: 100%;">
+                    <option value="">Select a state</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+            </div>
+            <div class="input-box">
+                @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
+                <select id="cityDropdown" class="select" style="height: 50px; width: 100%;">
+                    <option value="">Select a city</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+            </div>
+
+
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
+
+            <div class="input-box">
                 @Html.LabelFor(model => model.confirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.confirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.confirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
             </div>
-    
-            <div class="form-group">
+
+
+
+            <div class="">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Create" class="button" />
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
-</body>
-</html>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    function validateName() {
+        var nameInput = document.getElementById("name");
+        var nameValue = nameInput.value.trim();
+        var nameError = document.getElementById("nameError");
+
+        // Clear previous error message
+        nameError.textContent = "";
+
+        // Check if the field is empty
+        if (nameValue === "") {
+            nameError.textContent = " name cannot be empty.";
+            return;
+        }
+
+        // Check if the input contains only alphabetic characters
+        if (!/^[A-Za-z]+$/.test(nameValue)) {
+            nameError.textContent = " Name should contain alphabetic characters only.";
+            return;
+        }
+
+
+
+
+
+
+        var countryStateCityMap = {
+            "United States": {
+                "New York": ["New York City", "Buffalo", "Rochester"],
+                "California": ["Los Angeles", "San Francisco", "San Diego"],
+                // ...
+            },
+            "Canada": {
+                "Ontario": ["Toronto", "Ottawa", "Mississauga"],
+                "Quebec": ["Montreal", "Quebec City", "Laval"],
+                // ...
+            },
+            "United Kingdom": {
+                "London": ["London City", "Westminster", "Camden"],
+                "Manchester": ["Manchester City Center", "Salford", "Old Trafford"],
+                // ...
+            },
+        };
+
+        // Get the dropdown elements
+        var countryDropdown = document.getElementById("countryDropdown");
+        var stateDropdown = document.getElementById("stateDropdown");
+        var cityDropdown = document.getElementById("cityDropdown");
+
+        // Populate country dropdown
+        for (var country in countryStateCityMap) {
+            var option = document.createElement("option");
+            option.value = country;
+            option.text = country;
+            countryDropdown.appendChild(option);
+        }
+        countryDropdown.addEventListener("change", function () {
+            var selectedCountry = countryDropdown.value;
+            var states = countryStateCityMap[selectedCountry] || {};
+
+            // Clear and populate state dropdown
+            stateDropdown.innerHTML = "";
+            cityDropdown.innerHTML = "";
+
+            var defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "Select a state";
+            stateDropdown.appendChild(defaultOption); for (var state in states) {
+                var stateOption = document.createElement("option");
+                stateOption.value = state;
+                stateOption.text = state;
+                stateDropdown.appendChild(stateOption);
+            }
+        });
+
+        // Handle state dropdown change event
+        stateDropdown.addEventListener("change", function () {
+            var selectedCountry = countryDropdown.value;
+            var selectedState = stateDropdown.value;
+            var cities = countryStateCityMap[selectedCountry][selectedState] || [];
+
+            // Clear and populate city dropdown
+            cityDropdown.innerHTML = ""; var defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "Select a city";
+            cityDropdown.appendChild(defaultOption);
+
+            cities.forEach(function (city) {
+                var cityOption = document.createElement("option");
+                cityOption.value = city;
+                cityOption.text = city;
+                cityDropdown.appendChild(cityOption);
+            });
+        });
+</script>

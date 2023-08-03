@@ -12,8 +12,7 @@
       <link href="~/Content/CSS/mainhomepage.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-
+<header>
         <nav>
 
             <div>
@@ -28,15 +27,18 @@
                 </ul>
             </div>
         </nav>
-    </div>
-    <div class="container body-content">
+    </header>
+<div class="">
+    @RenderBody()
+    @section Scripts {
+        <script src="~/Scripts/Javascript/FormValidation.js"></script>
+    }
+</div>
         <div>
-            @RenderBody()
             <footer class="footer">
                 <p>&copy; Online shopping platform</p>
             </footer>
         </div>
-    </div>
        
 </body>
 </html>

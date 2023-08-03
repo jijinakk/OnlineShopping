@@ -51,7 +51,7 @@ form .input-box {
 }
 
 .button {
-    background-color: #4CAF50;
+    background-color: deeppink;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -100,3 +100,26 @@ h3 {
 .gender label {
     color: #707070;
 }
+.select {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 15px;
+}
+
+.secondnav {
+    background-color: white;
+    overflow: hidden;
+     margin-top:10px;
+        float: right;
+        color:black;
+        text-align: center;
+        text-decoration: none;
+        font-size: 17px;
+    }
