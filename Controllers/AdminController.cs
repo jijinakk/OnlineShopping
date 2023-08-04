@@ -16,10 +16,14 @@ namespace OnlineShopping.Controllers
         {
             return View();
         }
+        public ActionResult AdminHomePage()
+        {
+            return View();
+        }
 
-       
-       
-       
+
+
+
 
         public ActionResult Delete(int id)
         {

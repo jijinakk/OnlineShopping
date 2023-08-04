@@ -99,11 +99,9 @@ namespace OnlineShopping.Respository
 
 
         [HttpPost]
-        public bool UpdateProduct
-            (Product product)
+        public bool UpdateProduct(Product product)
         {
-            using (SqlConnection connection = new SqlConnection("YourConnectionString"))
-            {
+            Connection();
                 connection.Open();
 
                 using (SqlCommand command = new SqlCommand("UpdateProduct", connection))
@@ -133,7 +131,7 @@ namespace OnlineShopping.Respository
                         return false;
                     }
                 }
-            }
+            
         }
     }
 }

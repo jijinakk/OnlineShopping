@@ -95,7 +95,7 @@ namespace OnlineShopping.Controllers
                 if (signupRepository.AddDetails(signup))
                 {
 
-                    ViewBag.Message = "User Details Added Successfully";
+                    TempData["SuccessMessage"] = "User Details Added Successfully"; // Store message in TempData
 
                 }
             }

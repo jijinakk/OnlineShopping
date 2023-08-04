@@ -175,6 +175,8 @@
     <Content Include="Content\Images\pexels-karolina-grabowska-5632388.jpg" />
     <Content Include="Content\Images\pexels-kindel-media-6868621.jpg" />
     <Content Include="Content\Images\pexels-kindel-media-6995253.jpg" />
+    <Content Include="Content\Images\Screenshot 2023-08-04 162639.png" />
+    <Content Include="Content\Images\Screenshot 2023-08-04 173731.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -234,6 +236,7 @@
     <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Views\Product\GetProducts.cshtml" />
     <Content Include="Views\Product\UpdateProduct.cshtml" />
+    <Content Include="Views\Admin\AdminHomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

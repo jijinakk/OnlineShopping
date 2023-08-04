@@ -58,7 +58,7 @@ namespace OnlineShopping.Controllers
                 command.ExecuteNonQuery();
                 connection.Close();
                 ViewData["Message"] = "product added" + product.productName + "saved";
-                return RedirectToAction("HomePage","Home");
+                return RedirectToAction("AdminHomePage","Admin");
             }
             catch (Exception)
             {
