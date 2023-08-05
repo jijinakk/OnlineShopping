@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OnlineShopping.Models;
+using OnlineShopping.Respository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -84,6 +86,15 @@ namespace OnlineShopping.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult GetProductsForUser()
+        {
+            UserRespository userRespository = new UserRespository();
+            List<Product> allproduct = userRespository.GetProductsForUser();
+            ModelState.Clear();
+            return View(allproduct);
+
         }
     }
 }

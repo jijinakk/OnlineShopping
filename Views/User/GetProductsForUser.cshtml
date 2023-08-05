@@ -1,0 +1,53 @@
+﻿@model IEnumerable<OnlineShopping.Models.Product>
+
+@{
+    ViewBag.Title = "GetProductsForUser";
+    Layout = "~/Views/User/UserLayoutPage.cshtml";
+}
+<script>
+        function showMessage() {
+            alert("Item has been added to the cart!");
+        }
+</script>
+<link href="~/Content/CSS/view Product.css" rel="stylesheet" />
+@foreach (var item in Model)
+
+{
+<div class="grid-container">
+
+    <div class="item1">
+
+        @if (item.image != null && item.image.Length > 0)
+        {
+            <img style="float:revert;width:300px;height:300px;padding-left:10px;" src="data:image/jpeg;base64,@Convert.ToBase64String(item.image)" alt="Profile Image" style="max-width: 100px; max-height: 100px;" />
+        }
+        else
+        {
+            <span>No Image</span>
+        }
+    </div>
+    <div class="grid-item">
+        @Html.DisplayFor(model => item.productName)
+
+    </div>
+
+
+    <div class="grid-item">
+
+        @Html.DisplayFor(model => item.Price)
+
+    </div>
+    <div class="grid-item">
+
+        @Html.DisplayFor(model => item.brand)
+    </div>
+    <button style="float:right" class="addtocart" onclick="showMessage() ">Add To Cart</button>
+
+</div>
+
+
+
+    }
+
+
+

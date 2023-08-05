@@ -4,40 +4,46 @@
     ViewBag.Title = "Signin";
     Layout = "~/Views/Home/MainHomePageLayout.cshtml";
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        alert('@TempData["SuccessMessage"]');
+    </script>
+}
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
 
-<link href="~/Content/CSS/createForm.css" rel="stylesheet" />
+    <link href="~/Content/CSS/createForm.css" rel="stylesheet" />
     @Html.AntiForgeryToken()
-    
-<div class="container">
-    <div style="font-size:25px ;">
-        <h3>Sign In</h3>
-    </div>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form">
-        <div class="input-box">
 
-        @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+    <div class="container">
+        <div style="font-size:25px ;">
+            <h3>Sign In</h3>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form">
+            <div class="input-box">
 
-    </div>
+                @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-    </div>
+            </div>
 
-    
+            <div class="input-box">
+                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
 
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Signin" class="button" />
-      </div>
-</div>
+
+
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Signin" class="button" />
+            </div>
+        </div>
     </div>
 }
 

@@ -48,6 +48,8 @@ namespace OnlineShopping.Respository
             command.Parameters.AddWithValue("@username", signup.username);
             command.Parameters.AddWithValue("@password", signup.password);
             connection.Open();
+            
+
             int i = command.ExecuteNonQuery();
             connection.Close();
             if (i > 0)

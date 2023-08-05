@@ -74,7 +74,50 @@ namespace OnlineShopping.Controllers
 
         }
 
-        public ActionResult UpdateProduct(int? id)
+        [HttpPost]
+        public JsonResult AddToCart(int productID)
+        {
+            ProductRespository productRespository = new ProductRespository();
+
+            List<CartItem> cartItems = Session["CartItems"] as List<CartItem>;
+            if (cartItems == null)
+            {
+                cartItems = new List<CartItem>();
+            }
+
+
+            CartItem existingCartItem = cartItems.FirstOrDefault(item => item.productID == productID);
+            if (existingCartItem != null)
+            {
+
+                existingCartItem.stockQuantity++;
+            }
+            else
+            {
+
+                Product product = productRespository.GetProductById(productID);
+                if (product != null)
+                {
+                    cartItems.Add(new CartItem
+                    {
+                        productID = product.productID,
+                        productName = product.productName,
+                        Price = product.Price,
+                        stockQuantity = 1
+                    });
+                }
+            }
+
+
+            Session["CartItems"] = cartItems;
+
+
+            var response = new { success = true, cartItemCount = cartItems.Count };
+            return Json(response);
+        }
+    
+
+public ActionResult UpdateProduct(int? id)
         {
             ProductRespository productRespository = new ProductRespository();
             return View(productRespository.GetProducts().Find(sign => sign.productID == id));

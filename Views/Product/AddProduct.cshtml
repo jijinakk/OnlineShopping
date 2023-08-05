@@ -23,67 +23,90 @@
         @Html.ValidationMessageFor(model => model.productName, "", new { @class = "text-danger" })
     </div>
 
-    <div class="input-box">
+    <div class="">
         @Html.LabelFor(model => model.productSize, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.productSize, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.productSize, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-gender">
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-    </div>
+            @Html.Label("Small")
+            @Html.RadioButtonFor(model => model.productSize, "small", new { @class = "form-check-input" })
+            @Html.Label("Medium")
+            @Html.RadioButtonFor(model => model.productSize, "medium", new { @class = "form-check-input" })
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-    </div>
+            @Html.Label("Large")
+            @Html.RadioButtonFor(model => model.productSize, "large", new { @class = "form-check-input" })
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.categoryID, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.categoryID, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.categoryID, "", new { @class = "text-danger" })
-    </div>
+        </div>
+        </div>
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.brand, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.brand, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.brand, "", new { @class = "text-danger" })
-    </div>
-    <div class="input-box">
-        @Html.Label("Image")
-        <input type="file" name="file" id="file" class="form-control" />
-    </div>
+        <div class="input-box">
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.stockQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.stockQuantity, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.stockQuantity, "", new { @class = "text-danger" })
-    </div>
+        <div class="input-box">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.productSource, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.productSource, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.productSource, "", new { @class = "text-danger" })
-    </div>
+        <div class="input-box">
+            @Html.LabelFor(model => model.categoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.categoryID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.categoryID, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="input-box">
-        @Html.LabelFor(model => model.sellerID, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.sellerID, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.sellerID, "", new { @class = "text-danger" })
-    </div>
+        <div class="input-box">
+            @Html.LabelFor(model => model.brand, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.brand, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.brand, "", new { @class = "text-danger" })
+        </div>
+        <div class="input-box">
+            @Html.Label("Image")
+            <input type="file" name="file" id="file" class="form-control" onfocusout="validateImageSize()" />
+        </div>
 
-    <div class="input-box">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="button" />
+        <div class="input-box">
+            @Html.LabelFor(model => model.stockQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.stockQuantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.stockQuantity, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="input-box">
+            @Html.LabelFor(model => model.productSource, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.productSource, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.productSource, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="input-box">
+            @Html.LabelFor(model => model.sellerID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.sellerID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.sellerID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="input-box">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="button" />
+            </div>
         </div>
     </div>
-</div>
     </div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    function validateImageSize() {
+        var input = document.getElementById("file");
+        if (input.files && input.files[0]) {
+            var fileSize = input.files[0].size; // Size in bytes
+            var maxSize = 1024 * 1024; // 1MB in bytes
+
+            if (fileSize > maxSize) {
+                alert("Image size should be less than 1MB.");
+                input.value = ""; // Clear the input
+            }
+        }
+    }
+</script>

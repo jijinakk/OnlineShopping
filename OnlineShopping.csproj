@@ -147,6 +147,7 @@
     <Compile Include="Respository\ProductRespository.cs" />
     <Compile Include="Respository\SigninRespository.cs" />
     <Compile Include="Respository\SignupRespository.cs" />
+    <Compile Include="Respository\UserRespository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -169,6 +170,7 @@
     <Content Include="Content\CSS\createForm.css" />
     <Content Include="Content\CSS\mainhomepage.css" />
     <Content Include="Content\CSS\userhomepage.css" />
+    <Content Include="Content\CSS\view Product.css" />
     <Content Include="Content\Images\pexels-andrea-piacquadio-1050244.jpg" />
     <Content Include="Content\Images\pexels-antoni-shkraba-6207736.jpg" />
     <Content Include="Content\Images\pexels-karolina-grabowska-5632381.jpg" />
@@ -234,9 +236,10 @@
     <Content Include="Views\Home\AddSellerDetails.cshtml" />
     <Content Include="Views\Product\Viewimg.cshtml" />
     <Content Include="Views\Product\AddProduct.cshtml" />
-    <Content Include="Views\Product\GetProducts.cshtml" />
     <Content Include="Views\Product\UpdateProduct.cshtml" />
     <Content Include="Views\Admin\AdminHomePage.cshtml" />
+    <Content Include="Views\Product\GetProducts.cshtml" />
+    <Content Include="Views\User\GetProductsForUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
