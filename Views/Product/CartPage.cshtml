@@ -1,0 +1,52 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "CartPage";
+    Layout = "~/Views/User/UserLayoutPage.cshtml";
+}
+
+<h2>CartPage</h2>
+
+
+
+<html>
+<head>
+    <script>
+        // Update the jsonResponseContainer with the response data
+        $(document).ready(function () {
+            $('#jsonResponseContainer').html(
+                '<p>Success: ' + @Html.Raw(Json.Encode(Model.success)) + '</p>' +
+                '<p>Cart Item Count: ' + @Html.Raw(Json.Encode(Model.cartItemCount)) + '</p>'
+                // You can add more elements to display other properties from the JSON response
+            );
+        });
+    </script>
+</head>
+
+
+<div id="jsonResponseContainer">
+    <p>Success: @Model.success</p>
+    <p>Cart Item Count: @Model.cartItemCount</p>
+
+    <div class="grid-container">
+
+        <div class="item1">
+
+            @if (@Model.image != null && @Model.image.Length > 0)
+            {
+                <img style="float:revert;width:300px;height:300px;padding-left:10px;" src="data:image/jpeg;base64,@Convert.ToBase64String( @Model.image)" alt="Profile Image" style="max-width: 100px; max-height: 100px;" />
+            }
+            else
+            {
+                <span>No Image</span>
+            }
+        </div>
+        <div class="grid-item">
+
+        </div>
+        <span id="cart-item-count">0</span>
+
+        }
+    </div>
+   </div>
+</html>

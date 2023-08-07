@@ -1,0 +1,40 @@
+﻿@model List<OnlineShopping.Models.CartItem>
+
+@{
+    ViewBag.Title = "AddToCart";
+    Layout = "~/Views/User/UserLayoutPage.cshtml";
+}
+
+<html>
+<head>
+    <title>Add to Cart</title>
+</head>
+<body>
+    @if (Model != null)
+    {
+        <h1>Cart Details</h1>
+
+        <table>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <!-- Other table headers -->
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.productID</td>
+                    <td>@item.productName</td>
+                    <!-- Other table cells -->
+                </tr>
+            }
+        </table>
+        <p>Total Items: @Model.Count</p>
+    }
+    else
+    {
+        <p>Cart is empty.</p>
+    }
+
+</body>
+</html>

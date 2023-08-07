@@ -189,6 +189,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Javascript\addToCart.js" />
     <Content Include="Scripts\Javascript\FormValidation.js" />
     <Content Include="Scripts\Javascript\slidshow.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -201,6 +202,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Product\Cart.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -240,6 +242,10 @@
     <Content Include="Views\Admin\AdminHomePage.cshtml" />
     <Content Include="Views\Product\GetProducts.cshtml" />
     <Content Include="Views\User\GetProductsForUser.cshtml" />
+    <Content Include="Views\Product\CartPage.cshtml" />
+    <Content Include="Views\Product\CartDetails.cshtml" />
+    <Content Include="Views\Product\GetProductForUser.cshtml" />
+    <Content Include="Views\Product\AddToCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,36 +29,42 @@ namespace OnlineShopping.Controllers
 
         public ActionResult Signin(Signin signin)
         {
-
-            if (ModelState.IsValid)
+            try
             {
-                SigninRespository signinRepository = new SigninRespository();
-                string role = signinRepository.GetUserRole(signin.username, signin.password);
+                if (ModelState.IsValid)
+                {
+                    SigninRespository signinRepository = new SigninRespository();
+                    string role = signinRepository.GetUserRole(signin.username, signin.password);
 
-                if (role == "customer")
-                {
-                    return RedirectToAction("UserHomePage", "User");
+                    if (role == "customer")
+                    {
+                        return RedirectToAction("GetProductsForUser", "User");
 
+                    }
+                    else if (role == "seller")
+                    {
+                        return RedirectToAction("");
+                    }
+                    else if (role == "Admin")
+                    {
+                        return RedirectToAction("GetProducts", "Product");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Invalid username or password";
+                    }
                 }
-                else if (role == "seller")
-                {
-                    return RedirectToAction("");
-                }
-                else if (role == "Admin")
-                {
-                    return RedirectToAction("AdminHomePage", "Admin");
-                }
-                else
-                {
-                    ViewBag.Message = "Invalid username or password";
-                }
+
+                return View();
+
+
+            }
+            catch
+            {
+                return View();
             }
 
-            return RedirectToAction("EditDetails");
-
-
         }
-
-    }
+}
 }
     

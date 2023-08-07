@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<OnlineShopping.Models.Product>
 
 @{
-    ViewBag.Title = "GetProductsForUser";
+    ViewBag.Title = "GetProductForUser";
     Layout = "~/Views/User/UserLayoutPage.cshtml";
 }
+
 <html>
 <head>
-<link href="~/Content/CSS/view Product.css" rel="stylesheet" />
+    <link href="~/Content/CSS/view Product.css" rel="stylesheet" />
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="~/Scripts/Javascript/addToCart.js"></script>
+    <script src="~/Scripts/Javascript/addToCart.js"></script>
 
 
 </head>
@@ -46,7 +47,7 @@
 
                 @Html.DisplayFor(model => item.brand)
             </div>
-            <button style="float:right" class="addtocart" onclick="addtoCart('@item.productID')">Add To Cart</button>
+            <button style="float:right" class="addtocart"  data-product-id="addtoCart('@item.productID')">Add To Cart</button>
 
         </div>
 

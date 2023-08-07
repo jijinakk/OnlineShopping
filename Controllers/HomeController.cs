@@ -38,22 +38,31 @@ namespace OnlineShopping.Controllers
         [HttpPost]
         public ActionResult Contactus(Contactus contactus)
         {
-            SignupRespository signupRepository = new SignupRespository();
-
-            if (ModelState.IsValid)
+            try
             {
+                SignupRespository signupRepository = new SignupRespository();
 
-
-                if (signupRepository.Contactus(contactus))
+                if (ModelState.IsValid)
                 {
 
-                    ViewBag.Message = "User Details Added Successfully";
+
+                    if (signupRepository.Contactus(contactus))
+                    {
+
+                        ViewBag.Message = "User Details Added Successfully";
+
+                    }
 
                 }
+                return View();
 
             }
-            return View();
 
+            catch
+            {
+                return View();
+            }
+        
         }
 
 
@@ -85,32 +94,47 @@ namespace OnlineShopping.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult AddDetail(Signup signup)
-        { 
-            SignupRespository signupRepository = new SignupRespository();
-
-            if (ModelState.IsValid)
+        {
+            try
             {
+                SignupRespository signupRepository = new SignupRespository();
 
-
-                if (signupRepository.AddDetails(signup))
+                if (ModelState.IsValid)
                 {
 
-                    TempData["SuccessMessage"] = "User Details Added Successfully"; // Store message in TempData
 
+                    if (signupRepository.AddDetails(signup))
+                    {
+
+                        TempData["SuccessMessage"] = "User Details Added Successfully"; // Store message in TempData
+
+                    }
                 }
+
+
+                return RedirectToAction("Signin", "Signin");
             }
-
-
-            return RedirectToAction("Signin","Signin");
+            catch
+            {
+                return View();
+            }
 
         }
 
 
         public ActionResult EditDetails(int? id)
         {
-            SignupRespository signupRepository = new SignupRespository();
+            try
+            {
+                SignupRespository signupRepository = new SignupRespository();
 
-            return View(signupRepository.GetDetails().Find(sign => sign.id == id));
+                return View(signupRepository.GetDetails().Find(sign => sign.id == id));
+            }
+            catch
+            {
+                return View();
+            }
+
 
         }
         /// <summary>

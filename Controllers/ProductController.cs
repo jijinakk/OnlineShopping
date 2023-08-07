@@ -73,51 +73,79 @@ namespace OnlineShopping.Controllers
             return View(allproduct);
 
         }
+        public ActionResult GetProductForUser()
+        {
+            UserRespository userRespository = new UserRespository();
+            List<Product> allproduct = userRespository.GetProductsForUser();
+            ModelState.Clear();
+            return View(allproduct);
 
+        }
         [HttpPost]
-        public JsonResult AddToCart(int productID)
+        public ActionResult CartDetails(int productID)
         {
             ProductRespository productRespository = new ProductRespository();
-
-            List<CartItem> cartItems = Session["CartItems"] as List<CartItem>;
-            if (cartItems == null)
+            try
             {
-                cartItems = new List<CartItem>();
-            }
-
-
-            CartItem existingCartItem = cartItems.FirstOrDefault(item => item.productID == productID);
-            if (existingCartItem != null)
-            {
-
-                existingCartItem.stockQuantity++;
-            }
-            else
-            {
-
-                Product product = productRespository.GetProductById(productID);
-                if (product != null)
+                List<CartItem> cartItems = Session["CartItems"] as List<CartItem>;
+                if (cartItems == null)
                 {
-                    cartItems.Add(new CartItem
+                    cartItems = new List<CartItem>();
+                }
+
+                CartItem existingCartItem = cartItems.FirstOrDefault(item => item.productID == productID);
+                if (existingCartItem != null)
+                {
+                    existingCartItem.stockQuantity++;
+                }
+                else
+                {
+                    Product product = productRespository.GetProductById(productID);
+                    if (product != null)
                     {
-                        productID = product.productID,
-                        productName = product.productName,
-                        Price = product.Price,
-                        stockQuantity = 1
-                    });
+                        cartItems.Add(new CartItem
+                        {
+                            productID = product.productID,
+                            productName = product.productName,
+                            Price = product.Price,
+                            stockQuantity = 1
+                        });
+                    }
+                }
+
+                Session["CartItems"] = cartItems; var response = new { success = true, cartItemCount = cartItems.Count };
+                return View("CartDetails", cartItems);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, errorMessage = "An error occurred while adding the product to cart." });
+            }
+        }
+    
+        public ActionResult CartDetails()
+        {
+            List<CartItem> cartItems = Session["CartItems"] as List<CartItem>;
+
+            return View(cartItems);
+        }
+        public ActionResult CartPage()
+        {
+                // Retrieve JSON response data from TempData
+                var jsonResponse = TempData["CartResponse"] as dynamic;
+
+                if (jsonResponse != null)
+                {
+                    return View(jsonResponse);
+                }
+                else
+                {
+                    // Handle the case where the JSON response is not available
+                    return RedirectToAction("Index"); // Redirect to a suitable page
                 }
             }
 
 
-            Session["CartItems"] = cartItems;
-
-
-            var response = new { success = true, cartItemCount = cartItems.Count };
-            return Json(response);
-        }
-    
-
-public ActionResult UpdateProduct(int? id)
+            public ActionResult UpdateProduct(int? id)
         {
             ProductRespository productRespository = new ProductRespository();
             return View(productRespository.GetProducts().Find(sign => sign.productID == id));

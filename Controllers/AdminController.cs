@@ -77,9 +77,16 @@ namespace OnlineShopping.Controllers
         /// <returns></returns>
         public ActionResult GetContactus()
         {
-            AdminRespository adminRespository = new AdminRespository();
-            ModelState.Clear();
-            return View(adminRespository.FeedbackDetails());
+            try
+            {
+                AdminRespository adminRespository = new AdminRespository();
+                ModelState.Clear();
+                return View(adminRespository.FeedbackDetails());
+            }
+            catch
+            {
+                return View();
+            }
         }
 
        
