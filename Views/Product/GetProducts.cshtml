@@ -33,9 +33,8 @@
          <div class="productname"> @Html.DisplayFor(modelItem => item.description)</div>
          <div class="productname"> @Html.DisplayFor(modelItem => item.brand)</div>
          <div class="productname"> @Html.DisplayFor(modelItem => item.productSize)</div>
-         @Html.ActionLink("Edit", "Edit", new { id = item.productID }) |
-         @Html.ActionLink("Details", "Details", new { id = item.productID }) |
-         @Html.ActionLink("Delete", "Delete", new { id = item.productID })
+    @Html.ActionLink("Edit", "UpdateProduct", "Product", new { id = item.productID }, null) |
+         @Html.ActionLink("Cancel", "DeleteProduct","", new { id = item.productID },null)
      </div>
      </div>
      }

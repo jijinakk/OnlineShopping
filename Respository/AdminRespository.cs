@@ -19,6 +19,7 @@ namespace OnlineShopping.Respository
             string conString = ConfigurationManager.ConnectionStrings["GetConnection"].ToString();
             connection = new SqlConnection(conString);
         }
+
         public bool DeleteDetails(int id)
         {
             Connection();
@@ -37,6 +38,24 @@ namespace OnlineShopping.Respository
 
 
 
+                return false;
+            }
+        }
+        public bool DeleteProduct(int productID)
+        {
+            Connection();
+            SqlCommand command = new SqlCommand("SPD_Product", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@productID", productID);
+            connection.Open();
+            int i = command.ExecuteNonQuery();
+            connection.Close();
+            if (i > 0)
+            {
+                return true;
+            }
+            else
+            {
                 return false;
             }
         }

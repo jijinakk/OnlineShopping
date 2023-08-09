@@ -11,8 +11,28 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="~/Scripts/Javascript/addToCart.js"></script>
+    <script>
+        function addToCart(productID)
+        {
+    console.log("Adding product with ID: " + productID);
 
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("AddToCart", "Product")',
+
+        data: { productID: productID },
+        success: function (response) {
+            console.log("AJAX success response:", response);
+            if (response.success) {
+                $('#cart-item-count').text(response.cartItemCount);
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log("AJAX error:", errorThrown);
+        }
+    });
+}
+    </script>
 
 </head>
 <body>
@@ -47,7 +67,7 @@
 
                 @Html.DisplayFor(model => item.brand)
             </div>
-            <button style="float:right" class="addtocart"  data-product-id="addtoCart('@item.productID')">Add To Cart</button>
+            <button style="float:right" class="addtocart"  onclick="addToCart('@item.productID')">Add To Cart</button>
 
         </div>
 

@@ -47,6 +47,9 @@ namespace OnlineShopping.Models
     {
         public int productID { get; set; }
         public string productName { get; set; }
+        [DisplayName("Image")]
+
+        public byte[] image { get; set; }
         public decimal Price { get; set; }
 
         public int stockQuantity { get; set; }

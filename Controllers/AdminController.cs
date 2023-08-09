@@ -88,7 +88,12 @@ namespace OnlineShopping.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// deleteproduct
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="signup"></param>
+        /// <returns></returns>
        
     }
         

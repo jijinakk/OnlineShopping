@@ -82,8 +82,9 @@ namespace OnlineShopping.Controllers
 
         }
         [HttpPost]
-        public ActionResult CartDetails(int productID)
+        public JsonResult AddToCart(int productID)
         {
+
             ProductRespository productRespository = new ProductRespository();
             try
             {
@@ -106,46 +107,67 @@ namespace OnlineShopping.Controllers
                         cartItems.Add(new CartItem
                         {
                             productID = product.productID,
+                            image=product.image,
                             productName = product.productName,
                             Price = product.Price,
                             stockQuantity = 1
                         });
                     }
                 }
+                Session["CartItems"] = cartItems;
 
-                Session["CartItems"] = cartItems; var response = new { success = true, cartItemCount = cartItems.Count };
-                return View("CartDetails", cartItems);
+
+                var response = new { success = true, cartItemCount = cartItems.Count };
+                return Json(response);
             }
-            catch (Exception ex)
+            
+            catch (Exception )
             {
                 return Json(new { success = false, errorMessage = "An error occurred while adding the product to cart." });
             }
         }
-    
-        public ActionResult CartDetails()
+
+        [HttpGet]
+        
+        public ActionResult CartItems()
         {
-            List<CartItem> cartItems = Session["CartItems"] as List<CartItem>;
+            // Retrieve cart items from your data source (session, database, etc.)
+            List<CartItem> cartItems = GetCartItemsFromDataSource();
 
             return View(cartItems);
         }
-        public ActionResult CartPage()
+        private List<CartItem> GetCartItemsFromDataSource()
         {
-                // Retrieve JSON response data from TempData
-                var jsonResponse = TempData["CartResponse"] as dynamic;
+            // Retrieve cart items from session
+            List<CartItem> cartItems = Session["CartItems"] as List<CartItem>;
 
-                if (jsonResponse != null)
+            // If cartItems is null, initialize an empty list
+            if (cartItems == null)
+            {
+                cartItems = new List<CartItem>();
+            }
+
+            return cartItems;
+        }
+
+        public ActionResult RemoveFromCart(int id)
+        {
+            List<CartItem> sessionCartItems = Session["CartItems"] as List<CartItem>;
+            if (sessionCartItems != null)
+            {
+                var itemToRemove = sessionCartItems.FirstOrDefault(item => item.productID == id);
+                if (itemToRemove != null)
                 {
-                    return View(jsonResponse);
-                }
-                else
-                {
-                    // Handle the case where the JSON response is not available
-                    return RedirectToAction("Index"); // Redirect to a suitable page
+                    sessionCartItems.Remove(itemToRemove);
+                    Session["CartItems"] = sessionCartItems;
                 }
             }
 
+            return RedirectToAction("CartItems");
+        }
 
-            public ActionResult UpdateProduct(int? id)
+
+        public ActionResult UpdateProduct(int? id)
         {
             ProductRespository productRespository = new ProductRespository();
             return View(productRespository.GetProducts().Find(sign => sign.productID == id));
@@ -172,6 +194,23 @@ namespace OnlineShopping.Controllers
             return RedirectToAction("AddProduct");
 
             // Redirect or return a view
+        }
+
+        public ActionResult DeleteProduct(int productID, Product product)
+        {
+            try
+            {
+                ProductRespository productRespository = new ProductRespository();
+                if (productRespository.DeleteProduct(productID))
+                {
+                    ViewBag.AlertMessage("User details deleted successfully");
+                }
+                return RedirectToAction("GetProducts");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

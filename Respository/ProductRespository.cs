@@ -133,7 +133,24 @@ namespace OnlineShopping.Respository
 
             return product;
         }
-
+        public bool DeleteProduct(int productID)
+        {
+            Connection();
+            SqlCommand command = new SqlCommand("SPD_Product", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@productID", productID);
+            connection.Open();
+            int i = command.ExecuteNonQuery();
+            connection.Close();
+            if (i > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         /*
         public List<Product> GetProductById(int productID) ///int formId
         {
@@ -188,6 +205,8 @@ namespace OnlineShopping.Respository
         {
             Connection();
                 connection.Open();
+            
+
 
                 using (SqlCommand command = new SqlCommand("UpdateProduct", connection))
                 {
@@ -201,11 +220,14 @@ namespace OnlineShopping.Respository
                     command.Parameters.AddWithValue("@categoryID", product.categoryID);
                     command.Parameters.AddWithValue("@brand", product.brand);
                     command.Parameters.AddWithValue("@stockQuantity", product.stockQuantity);
-                    command.Parameters.AddWithValue("@image", product.image);
                     command.Parameters.AddWithValue("@productSource", product.productSource);
                     command.Parameters.AddWithValue("@sellerID", product.sellerID);
+                SqlParameter imageParameter = new SqlParameter("@image", SqlDbType.VarBinary); // Replace SqlDbType.VarBinary with the appropriate data type for your image column
+                imageParameter.Value = product.image;
+                command.Parameters.Add(imageParameter);
 
-                    int i = command.ExecuteNonQuery();
+
+                int i = command.ExecuteNonQuery();
                     connection.Close();
                     if (i > 0)
                     {
@@ -215,8 +237,11 @@ namespace OnlineShopping.Respository
                     {
                         return false;
                     }
+
                 }
             
+            
+
         }
     }
 }
