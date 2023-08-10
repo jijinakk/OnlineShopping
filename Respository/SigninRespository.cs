@@ -39,8 +39,7 @@ namespace OnlineShopping.Respository
             SqlCommand command = new SqlCommand("SP_GetValidatedUser", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@username", username);
-            //   string hashedPassword = HashPassword(password);
-            command.Parameters.AddWithValue("@password", Decrypt(password));
+            command.Parameters.AddWithValue("@password", password);
 
             connection.Open();
             var role = command.ExecuteScalar() as string;
