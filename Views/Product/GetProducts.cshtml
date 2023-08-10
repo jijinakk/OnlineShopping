@@ -4,7 +4,16 @@
     ViewBag.Title = "GetProducts";
     Layout = "~/Views/Admin/AdminLayout.cshtml";
 }
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        <strong>Information :</strong>
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span>&times;</span>
+        </button>
+    </div>
+}
 <h2>GetProducts</h2>
 <link href="~/Content/CSS/view Product.css" rel="stylesheet" />
 <p>
@@ -15,27 +24,27 @@
 @foreach (var item in Model)
 
 {
- <div class="productcont">
-     <div class="product">
-         <div class="product-img">
-             @if (item.image != null && item.image.Length > 0)
-             {
-                 <img style="float:revert;width:180px;height:150px;padding-left:10px;" src="data:image/jpeg;base64,@Convert.ToBase64String(item.image)" alt="Profile Image" style="max-width: 100px; max-height: 100px;" />
-             }
-             else
-             {
-                 <span>No Image</span>
-             }
-         </div>
-         <div class="productname">@Html.DisplayFor(modelItem => item.productName)</div>
-         <div class="productname"> @Html.DisplayFor(modelItem => item.Price)</div>
-         <div class="productname"> @Html.DisplayFor(modelItem => item.productSize)</div>
-         <div class="productname"> @Html.DisplayFor(modelItem => item.description)</div>
-         <div class="productname"> @Html.DisplayFor(modelItem => item.brand)</div>
-         <div class="productname"> @Html.DisplayFor(modelItem => item.productSize)</div>
-    @Html.ActionLink("Edit", "UpdateProduct", "Product", new { id = item.productID }, null) |
-         @Html.ActionLink("Cancel", "DeleteProduct","", new { id = item.productID },null)
-     </div>
-     </div>
-     }
+    <div class="productcont">
+        <div class="product">
+            <div class="product-img">
+                @if (item.image != null && item.image.Length > 0)
+                {
+                    <img style="float:revert;width:220px;height:220px;padding-left:10px;" src="data:image/jpeg;base64,@Convert.ToBase64String(item.image)" alt="Profile Image" style="max-width: 100px; max-height: 100px;" />
+                }
+                else
+                {
+                    <span>No Image</span>
+                }
+            </div>
+            <div class="productname">@Html.DisplayFor(modelItem => item.productName)</div>
+            <div class="productname"> @Html.DisplayFor(modelItem => item.Price)</div>
+            <div class="productname"> @Html.DisplayFor(modelItem => item.productSize)</div>
+            <div class="productname"> @Html.DisplayFor(modelItem => item.description)</div>
+            <div class="productname"> @Html.DisplayFor(modelItem => item.brand)</div>
+            <div class="productname"> @Html.DisplayFor(modelItem => item.productSize)</div>
+            @Html.ActionLink("Edit", "UpdateProduct", "Product", new { id = item.productID }, null) |
+            @Html.ActionLink("Cancel", "DeleteProduct", "Product", new { id = item.productID }, null)
+        </div>
+    </div>
+}
 

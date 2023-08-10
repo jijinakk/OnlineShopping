@@ -10,6 +10,7 @@ using System.Text;
 using System.Web;
 using System.Drawing;
 using System.Diagnostics;
+using System.IO;
 
 namespace OnlineShopping.Respository
 {
@@ -23,7 +24,7 @@ namespace OnlineShopping.Respository
             string conString = ConfigurationManager.ConnectionStrings["GetConnection"].ToString();
             connection = new SqlConnection(conString);
         }
-        
+
 
         ///<summary>
         ///signup form
@@ -46,9 +47,9 @@ namespace OnlineShopping.Respository
             command.Parameters.AddWithValue("@pincode", signup.pincode);
             command.Parameters.AddWithValue("@country", signup.country);
             command.Parameters.AddWithValue("@username", signup.username);
-            command.Parameters.AddWithValue("@password", signup.password);
+            command.Parameters.AddWithValue("@password", Encrypt(signup.password));
             connection.Open();
-            
+
 
             int i = command.ExecuteNonQuery();
             connection.Close();
@@ -150,7 +151,7 @@ namespace OnlineShopping.Respository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        
+
         /// <summary>
         /// Add seller
         /// </summary>
@@ -226,7 +227,7 @@ namespace OnlineShopping.Respository
             return SellerSignupList;
         }
 
-        
+
         public bool Contactus(Contactus contactus)
         {
             Connection();
@@ -236,7 +237,7 @@ namespace OnlineShopping.Respository
             command.Parameters.AddWithValue("@email", contactus.email);
             command.Parameters.AddWithValue("@subject", contactus.subject);
             command.Parameters.AddWithValue("@message", contactus.message);
-           
+
             connection.Open();
             int i = command.ExecuteNonQuery();
             connection.Close();
@@ -250,6 +251,28 @@ namespace OnlineShopping.Respository
             }
 
         }
-       
+
+        private string Encrypt(string clearText)
+        {
+            string encryptionKey = "MAKV2SPBNI99212";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(encryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    clearText = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+
+            return clearText;
+        }
     }
 }

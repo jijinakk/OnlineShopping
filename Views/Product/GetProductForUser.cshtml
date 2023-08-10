@@ -4,7 +4,11 @@
     ViewBag.Title = "GetProductForUser";
     Layout = "~/Views/User/UserLayoutPage.cshtml";
 }
+@if (Session["Username"] !=null)
 
+{
+    <h1>Welcome@Session["Username"].ToString()</h1>
+}
 <html>
 <head>
     <link href="~/Content/CSS/view Product.css" rel="stylesheet" />
@@ -24,18 +28,34 @@
         success: function (response) {
             console.log("AJAX success response:", response);
             if (response.success) {
-                $('#cart-item-count').text(response.cartItemCount);
+                var cartItemCount = parseInt(response.cartItemCount);
+                $('#cart-item-count').text(cartItemCount);
+                showSuccessMessage("Product added to cart successfully!");
+
             }
         },
         error: function (xhr, textStatus, errorThrown) {
             console.log("AJAX error:", errorThrown);
         }
     });
-}
+        }
+        function showSuccessMessage(message) {
+            // Create a new element for the message
+            var successMessage = $('<div class="alert alert-success" role="alert">' + message + '</div>');
+
+            // Append the message element to a container (e.g., a div with id "messages")
+            $('#messages').append(successMessage);
+
+            // Automatically remove the message after a certain time (e.g., 3 seconds)
+            setTimeout(function () {
+                successMessage.remove();
+            }, 3000); // Adjust the duration as needed
+        }
     </script>
 
 </head>
 <body>
+
     @foreach (var item in Model)
 
     {
@@ -67,7 +87,7 @@
 
                 @Html.DisplayFor(model => item.brand)
             </div>
-            <button style="float:right" class="addtocart"  onclick="addToCart('@item.productID')">Add To Cart</button>
+            <button style="float:right" class="addtocart" onclick="addToCart('@item.productID')">Add To Cart</button>
 
         </div>
 

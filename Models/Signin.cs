@@ -10,6 +10,8 @@ namespace OnlineShopping.Models
 {
     public class Signin
     {
+        public int id { get; set; }
+
         [DisplayName("Username")]
 
         public string username { get; set; }

@@ -20,6 +20,12 @@
             document.getElementById("mySidenav").style.width = "0";
         }
     </script>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
+    </script>
 </head>
 
 <body>
@@ -52,6 +58,7 @@
     <div class="container body-content">
         @RenderBody()
         <div>
+
             <footer class="footer">
                 <p>&copy; Online shopping platform</p>
             </footer>

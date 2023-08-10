@@ -38,6 +38,10 @@ namespace OnlineShopping.Controllers
 
                     if (role == "customer")
                     {
+                        Session["UserId"] = signin.id.ToString();
+                        Session["Username"] = signin.username.ToString();
+
+                        ViewBag.username = signin.username;
                         return RedirectToAction("GetProductsForUser", "User");
 
                     }

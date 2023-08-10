@@ -58,7 +58,7 @@ namespace OnlineShopping.Controllers
                 command.ExecuteNonQuery();
                 connection.Close();
                 ViewData["Message"] = "product added" + product.productName + "saved";
-                return RedirectToAction("AdminHomePage","Admin");
+                return RedirectToAction("GetProducts", "Product");
             }
             catch (Exception)
             {
@@ -107,7 +107,8 @@ namespace OnlineShopping.Controllers
                         cartItems.Add(new CartItem
                         {
                             productID = product.productID,
-                            image=product.image,
+                            image = product.image,// Set the image data here
+
                             productName = product.productName,
                             Price = product.Price,
                             stockQuantity = 1
@@ -120,15 +121,15 @@ namespace OnlineShopping.Controllers
                 var response = new { success = true, cartItemCount = cartItems.Count };
                 return Json(response);
             }
-            
-            catch (Exception )
+
+            catch (Exception)
             {
                 return Json(new { success = false, errorMessage = "An error occurred while adding the product to cart." });
             }
         }
 
         [HttpGet]
-        
+
         public ActionResult CartItems()
         {
             // Retrieve cart items from your data source (session, database, etc.)
@@ -175,7 +176,7 @@ namespace OnlineShopping.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProduct( int? id,Product product, HttpPostedFileBase newImage)
+        public ActionResult UpdateProduct(int? id, Product product, HttpPostedFileBase newImage)
         {
             ProductRespository productRespository = new ProductRespository();
             if (newImage != null)
@@ -190,22 +191,24 @@ namespace OnlineShopping.Controllers
 
                 product.image = imageData;
             }
-           productRespository.UpdateProduct(product);
+            productRespository.UpdateProduct(product);
             return RedirectToAction("AddProduct");
 
             // Redirect or return a view
         }
-
-        public ActionResult DeleteProduct(int productID, Product product)
+    
+        public ActionResult DeleteProduct(int id)
         {
             try
             {
                 ProductRespository productRespository = new ProductRespository();
-                if (productRespository.DeleteProduct(productID))
+                if (productRespository.DeleteProduct(id))
                 {
                     ViewBag.AlertMessage("User details deleted successfully");
+                    return RedirectToAction("GetProducts");
+
                 }
-                return RedirectToAction("GetProducts");
+                return View();
             }
             catch
             {

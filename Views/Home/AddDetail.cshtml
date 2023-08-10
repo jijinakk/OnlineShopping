@@ -6,7 +6,6 @@
 }
 <link href="~/Content/CSS/createForm.css" rel="stylesheet" />
 
-<script src="~/Scripts/Javascript/FormValidation.js"></script>
 
 
 <div class="secondnav">
@@ -53,16 +52,13 @@
 
             </div>
             <div class="">
-
                 @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-gender">
-
                     @Html.Label("Male")
+                    @Html.RadioButtonFor(model => model.gender, "M", new { @class = "form-check-input", id = "gender-male" })
 
-                    @Html.RadioButtonFor(model => model.gender, "M", new { @class = "form-check-input" })
                     @Html.Label("Female")
-
-                    @Html.RadioButtonFor(model => model.gender, "F", new { @class = "form-check-input" })
+                    @Html.RadioButtonFor(model => model.gender, "F", new { @class = "form-check-input", id = "gender-female" })
                 </div>
             </div>
 
@@ -89,25 +85,21 @@
             </div>
             <div class="input-box">
                 @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
-                <select id="countryDropdown" class="select" style="height: 50px; width: 100%;">
-                    <option value="">Select a country</option>
-                    <!-- Add country options here -->
-                </select>
+                @Html.EditorFor(model => model.country, new { htmlAttributes = new { @class = "form-control" } })
+
                 @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
             </div>
 
             <div class="inpt-box">
                 @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
-                <select id="stateDropdown" class="select" style="height: 50px; width: 100%;">
-                    <option value="">Select a state</option>
-                </select>
+                @Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })
+
                 @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
             </div>
             <div class="input-box">
                 @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
-                <select id="cityDropdown" class="select" style="height: 50px; width: 100%;">
-                    <option value="">Select a city</option>
-                </select>
+                @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
+
                 @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
             </div>
 
@@ -209,19 +201,23 @@ function validateLastName() {
 }
 
 
-function validateDateOfBirth() {
-    var dateOfBirthInput = document.getElementById("dateOfBirth");
-    var dateOfBirthError = document.getElementById("dateOfBirthError");
+    function validateDateOfBirth() {
+        var dateOfBirthInput = document.getElementById("dateOfBirth");
+        var dateOfBirthError = document.getElementById("dateOfBirthError");
 
-    var enteredDate = new Date(dateOfBirthInput.value);
-    var currentDate = new Date();
+        var enteredDate = new Date(dateOfBirthInput.value);
+        var currentDate = new Date();
+        var minDate = new Date();
+        minDate.setFullYear(currentDate.getFullYear() - 18); // Set minimum age to 18 years
 
-    if (enteredDate > currentDate) {
-        dateOfBirthError.innerHTML = "Date of birth cannot be a future date.";
-    } else {
-        dateOfBirthError.innerHTML = "";
+        if (enteredDate > currentDate) {
+            dateOfBirthError.innerHTML = "Date of birth cannot be a future date.";
+        } else if (enteredDate > minDate) {
+            dateOfBirthError.innerHTML = "Minimum age requirement is 18 years.";
+        } else {
+            dateOfBirthError.innerHTML = "";
+        }
     }
-}
 var emailPattern = @Html.Raw("new RegExp(\"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$\")");
 
 function validateEmail() {
@@ -264,76 +260,6 @@ function validatePassword() {
         confirmPasswordError.innerHTML = "";
     }
 }
-
-    var countryStateCityMap = {
-        "United States": {
-            "New York": ["New York City", "Buffalo", "Rochester"],
-            "California": ["Los Angeles", "San Francisco", "San Diego"],
-            // ...
-        },
-        "Canada": {
-            "Ontario": ["Toronto", "Ottawa", "Mississauga"],
-            "Quebec": ["Montreal", "Quebec City", "Laval"],
-            // ...
-        },
-        "United Kingdom": {
-            "London": ["London City", "Westminster", "Camden"],
-            "Manchester": ["Manchester City Center", "Salford", "Old Trafford"],
-            // ...
-        },
-    };
-
-    // Get the dropdown elements
-    var countryDropdown = document.getElementById("countryDropdown");
-    var stateDropdown = document.getElementById("stateDropdown");
-    var cityDropdown = document.getElementById("cityDropdown");
-
-    // Populate country dropdown
-    for (var country in countryStateCityMap) {
-        var option = document.createElement("option");
-        option.value = country;
-        option.text = country;
-        countryDropdown.appendChild(option);
-    }
-    countryDropdown.addEventListener("change", function () {
-        var selectedCountry = countryDropdown.value;
-        var states = countryStateCityMap[selectedCountry] || {};
-
-        // Clear and populate state dropdown
-        stateDropdown.innerHTML = "";
-        cityDropdown.innerHTML = "";
-
-        var defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.text = "Select a state";
-        stateDropdown.appendChild(defaultOption); for (var state in states) {
-            var stateOption = document.createElement("option");
-            stateOption.value = state;
-            stateOption.text = state;
-            stateDropdown.appendChild(stateOption);
-        }
-    });
-
-    // Handle state dropdown change event
-    stateDropdown.addEventListener("change", function () {
-        var selectedCountry = countryDropdown.value;
-        var selectedState = stateDropdown.value;
-        var cities = countryStateCityMap[selectedCountry][selectedState] || [];
-
-        // Clear and populate city dropdown
-        cityDropdown.innerHTML = ""; var defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.text = "Select a city";
-        cityDropdown.appendChild(defaultOption);
-
-        cities.forEach(function (city) {
-            var cityOption = document.createElement("option");
-            cityOption.value = city;
-            cityOption.text = city;
-            cityDropdown.appendChild(cityOption);
-        });
-    });
-
 
 
 </script>

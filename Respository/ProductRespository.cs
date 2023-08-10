@@ -123,7 +123,7 @@ namespace OnlineShopping.Respository
                             brand = reader["brand"] != DBNull.Value ? Convert.ToString(reader["brand"]) : string.Empty,
                             stockQuantity = reader["stockQuantity"] != DBNull.Value ? Convert.ToString(reader["stockQuantity"]) : string.Empty,
                             image = reader["image"] != DBNull.Value ? reader["image"] as byte[] : null,
-                               productSource = reader["productSource"] != DBNull.Value ? Convert.ToString(reader["productSource"]) : string.Empty,
+                            productSource = reader["productSource"] != DBNull.Value ? Convert.ToString(reader["productSource"]) : string.Empty,
                             sellerID = reader["sellerID"] != DBNull.Value ? Convert.ToInt32(reader["sellerID"]) : 0,
                         };
                     }
@@ -133,12 +133,12 @@ namespace OnlineShopping.Respository
 
             return product;
         }
-        public bool DeleteProduct(int productID)
+        public bool DeleteProduct(int id)
         {
             Connection();
             SqlCommand command = new SqlCommand("SPD_Product", connection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@productID", productID);
+            command.Parameters.AddWithValue("@productID", id);
             connection.Open();
             int i = command.ExecuteNonQuery();
             connection.Close();
@@ -204,45 +204,59 @@ namespace OnlineShopping.Respository
         public bool UpdateProduct(Product product)
         {
             Connection();
-                connection.Open();
-            
+            connection.Open();
 
-
-                using (SqlCommand command = new SqlCommand("UpdateProduct", connection))
+            // Begin a transaction
+            using (SqlTransaction transaction = connection.BeginTransaction())
+            {
+                try
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@productID", product.productID);
-                    command.Parameters.AddWithValue("@productName", product.productName);
-                    command.Parameters.AddWithValue("@productSize", product.productSize);
-                    command.Parameters.AddWithValue("@description", product.description);
-                    command.Parameters.AddWithValue("@price", product.Price); // Assuming product.Price is a decimal property
-                    command.Parameters.AddWithValue("@categoryID", product.categoryID);
-                    command.Parameters.AddWithValue("@brand", product.brand);
-                    command.Parameters.AddWithValue("@stockQuantity", product.stockQuantity);
-                    command.Parameters.AddWithValue("@productSource", product.productSource);
-                    command.Parameters.AddWithValue("@sellerID", product.sellerID);
-                SqlParameter imageParameter = new SqlParameter("@image", SqlDbType.VarBinary); // Replace SqlDbType.VarBinary with the appropriate data type for your image column
-                imageParameter.Value = product.image;
-                command.Parameters.Add(imageParameter);
-
-
-                int i = command.ExecuteNonQuery();
-                    connection.Close();
-                    if (i > 0)
+                    using (SqlCommand command = new SqlCommand("UpdateProduct", connection, transaction)) // Pass the transaction here
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                        command.CommandType = CommandType.StoredProcedure;
 
+                        command.Parameters.AddWithValue("@productID", product.productID);
+                        command.Parameters.AddWithValue("@productName", product.productName);
+                        command.Parameters.AddWithValue("@productSize", product.productSize);
+                        command.Parameters.AddWithValue("@description", product.description);
+                        command.Parameters.AddWithValue("@price", product.Price); // Assuming product.Price is a decimal property
+                        command.Parameters.AddWithValue("@categoryID", product.categoryID);
+                        command.Parameters.AddWithValue("@brand", product.brand);
+                        command.Parameters.AddWithValue("@stockQuantity", product.stockQuantity);
+                        command.Parameters.AddWithValue("@productSource", product.productSource);
+                        command.Parameters.AddWithValue("@sellerID", product.sellerID);
+                        SqlParameter imageParameter = new SqlParameter("@image", SqlDbType.VarBinary);
+                        imageParameter.Value = product.image;
+                        command.Parameters.Add(imageParameter);
+
+                        int i = command.ExecuteNonQuery();
+
+                        if (i > 0)
+                        {
+                            transaction.Commit(); // Commit the transaction if update is successful
+                            return true;
+                        }
+                        else
+                        {
+                            transaction.Rollback(); // Rollback the transaction if update fails
+                            return false;
+                        }
+                    }
                 }
-            
-            
 
+                catch (Exception ex)
+                {
+                    transaction.Rollback(); // Rollback the transaction on exception
+                                            // Handle the exception as needed
+                    throw;
+                }
+                finally
+                {
+                    connection.Close(); // Close the connection in the finally block
+                }
+            }
         }
     }
 }
+
 
